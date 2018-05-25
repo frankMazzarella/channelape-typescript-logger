@@ -15,8 +15,7 @@
     "posttest": "npm run mutate && npm run cover",
     "cover": "nyc npm run unit-test",
     "mutate": "stryker run",
-    "lint": "tslint -p tsconfig.json && tslint -p test/tsconfig.json",
-    "e2e": "mocha --opts ./e2e/mocha.opts"
+    "lint": "tslint -p tsconfig.json && tslint -p test/tsconfig.json"
   },
   "files": [
     "dist"
