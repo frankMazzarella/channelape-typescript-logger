@@ -1,0 +1,32 @@
+dist: trusty
+sudo: required
+addons:
+  sonarcloud:
+    organization: channelape-github
+    token:
+      secure: KP2Ui6oyfp1+LiYRaxQRhGlpca5J7zeDf2UesjOyAUkkOg+qlyGc5O7zwnx1d3I4bLz3rzhPmVXbLHAfsI5r3ODtavXlge4ziqyfD9oLmNizXPXjX5+0wyMb8GHnIf+vftaMHMKlJTeoP30g842Ec6n3H2PFW/f62VST0Q01ZXhqWIw150NkG6fwcUnhQ5gwAMWcsIw/lwcvRFx4zkQPYM24/o8uEgIgIZI//zZXSljRrSBmg0kWXnqDfFpfTvbslTjJSJ4K0P1877GPWG8ExIHZiOYq8Fvg48/W6ANonMGYpDfsaDIZ74QAbHJi+Mwj/OFUdmhXAgBVx1D+zWiejHxicyY6Xa8OlP48vDXItL8jQYzoVRu9rlFcm28PTa/mUJhBtroXsU7yig4fc9spTxQJOaV5watmQs8WRvEPSYlEXgY7Ui8aA40/9lISC3ELJAfTlm3FZRBQ2rth0Q/cfJfhq//JUE1/xQrtxyesTNhEzzybteZLKEnTPfHBKNs24PTF5PZbXF9rAGL8hefczTXm2lrBg3zJXZui37q7IrdX/Ta/Kl//NH4vK7LqgQ7b+PDH+HRJQb+ZO+2ZBMY8PqrFMa/kgnWsaLzX+O2o2unuQwRCCN4lb0ea3eureJM98lC1IpU7MBRtHeQKkL1Ohup8vE3M1f0y+cJqa9D6B7I=
+language: node_js
+node_js:
+- 8.10.0
+jdk:
+- oraclejdk8
+install:
+- npm install
+script:
+- npm test
+after_success:
+- bash .travis/overwrite-sonar-project-version.sh
+- sonar-scanner
+cache:
+  directories:
+  - node_modules
+  - "$HOME/.sonar/cache"
+deploy:
+  provider: npm
+  skip_cleanup: true
+  email:
+    secure: qMFtzaH3MQ1xJOrhS/LA8mmEN9kwMxiJRRmMtArXD5Nm+2vchfA72eFMKjysLBeGz9PSp9pwR+3pe1Up1blnqduhx2YyDbRxFhPhkgmlNHELQcIU+V5+umPcLnq0UdHYhajmtVDmXTFQXdA2fZKGDJOi64p3zfUThW5CtlFEY0ZGHvv55zgqJboihOctTpNmFG+8UZsIjMqwVHKw54M/O5wXCdf4Lnk02+caAU/gvLQ6yiXWN9gihmkG/dJ6/TRhEg05v9gxJcAvPwkg9SNad75P6isRUFx84BfL4fzPT666QlUxFA85NDnmDxiX7YY2uChoJCNwUtrfaM4CakwD7LgDVLT7zpF4gepd9U6vUC3a3CvvzpHlKUxiBrZE7r9CTSWZ90js5gyd02pU6qUQqRrb75JtuhjYv3OgmvtJx+aSSPHFBz7cgzWmnKLQ/knMABorpqXaWLd4O9IIiJy1lYEbzGe+8wwDdodgTcgiU3PfXJrKL5PFZTJXS5SUTKKYI/RlSUlLsPRud0EQ7foRR2fM0aAhqkaAGP9j3XGgDqjktDxffhg6LIeJmfboPB/Ke0COGHGssM33/jMpWAwAfyG4AApq3c6wkHReQVAy5A/vJjVBsAgNR2NQ5ma+P2WL+frGgn8Y+ZKRoylQNPsvdK9OhGPJU1r3nEhdPbvlhWA=
+  api_key:
+    secure: nKimCx3V8vdgzATPsiZl5q1DVCQlisXCPt8oKGLi57bvrEmHKxQV6EelWIgcCR/8AalXEX/r/aBQCAB/NjXBs7RW1YKTdMKYHrOHAI9f3c0yI5+0H2qnUE323Z5nYtfHrHhhpufMSVd+EOUJNOtMC56uA0AOLof6qnBCgY506ldK/1pnjQQeO2dFenH1SrxYPK8E7KibRQsJV+VmrWKJ/92T9h1C/Y2mmWgvervA9mXrIL2RsqpAEc1NuIEutUWp4/k9WierW3xkRIBqYoDiMJNGiaYxknaD59LztLhGjWZDacYKXf12r7ym3TgYqcqYkvqbQCmeW1sWnUBAnYAEq1S1zc1gHBwuquUq9ZqN1UHdvfsBDKf+11j3JDcNn/erqqXaNWX0pWHgzBd992VO7kcjqGckq4gSIc3LLvSrXueUZwQ6+neWepT0efwqXqKZeb9XT4ZALfrZWjIeSAYMatccH8Dv6yACXaSBu3V6AP7wfFJGc+tMOizFKC8YPfTj5+buK4puLvCO9RDuGqEUUzAkqkjVG6Lj9WPxLtZ6iCLy7Z7mXbhNti+6yMBdYqb6kVswAfwkqJs6rGDnGzRq8eNEsx8IkdHx2NFt/Mqevwy5P+13Pc102qsGBixziprJeC0BW7v9OjAEr193vjMfACH9VvJhqPsAU1RCvZ61sWU=
+  on:
+    tags: true
