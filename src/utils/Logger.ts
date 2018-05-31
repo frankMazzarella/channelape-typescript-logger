@@ -30,9 +30,6 @@ export default class Logger {
   }
 
   private getLogLevel(logLevel: LogLevel | string): LogLevel {
-    if (typeof logLevel !== 'string') {
-      return logLevel;
-    }
     const loweredLogLevel = logLevel.toLowerCase();
     let retLogLevel: LogLevel;
     switch (loweredLogLevel) {
