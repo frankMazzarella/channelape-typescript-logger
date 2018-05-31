@@ -44,9 +44,6 @@ export default class Logger {
       case('warn'):
         retLogLevel = LogLevel.WARN;
         break;
-      case('info'):
-        retLogLevel = LogLevel.INFO;
-        break;
       case('verbose'):
         retLogLevel = LogLevel.VERBOSE;
         break;
