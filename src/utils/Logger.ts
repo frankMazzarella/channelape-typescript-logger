@@ -6,8 +6,11 @@ const LOG_FORMAT = '[%s] - %s';
 
 export default class Logger {
   private logger = this.createLogger();
+  private logLevel: LogLevel;
 
-  constructor(private loggerName: string, private logLevel: LogLevel | string) { }
+  constructor(private loggerName: string, logLevel: LogLevel | string) {
+    this.logLevel = this.getLogLevel(logLevel);
+  }
 
   public error(log: string): void {
     this.logger.error(util.format(LOG_FORMAT, this.loggerName, log));
@@ -23,6 +26,38 @@ export default class Logger {
 
   public debug(log: string): void {
     this.logger.debug(util.format(LOG_FORMAT, this.loggerName, log));
+  }
+
+  private getLogLevel(logLevel: LogLevel | string): LogLevel {
+    if (typeof logLevel !== 'string') {
+      return logLevel;
+    }
+    const loweredLogLevel = logLevel.toLowerCase();
+    let retLogLevel: LogLevel;
+    switch (loweredLogLevel) {
+      case('off'):
+        retLogLevel = LogLevel.OFF;
+        break;
+      case('error'):
+        retLogLevel = LogLevel.ERROR;
+        break;
+      case('warn'):
+        retLogLevel = LogLevel.WARN;
+        break;
+      case('info'):
+        retLogLevel = LogLevel.INFO;
+        break;
+      case('verbose'):
+        retLogLevel = LogLevel.VERBOSE;
+        break;
+      case('debug'):
+        retLogLevel = LogLevel.DEBUG;
+        break;
+      default:
+        retLogLevel = LogLevel.INFO;
+        break;
+    }
+    return retLogLevel;
   }
 
   private createLogger() {
