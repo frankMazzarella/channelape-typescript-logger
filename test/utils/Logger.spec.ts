@@ -38,13 +38,11 @@ describe('Logger', () => {
   });
 
   it('constructor should create winston logger with correct LogLevel when sent a LogLevel string', () => {
-    logger = new Logger('LogName', 'error');
-    logger.error('ERROR');
-    logger.warn('WARN');
-    const expectedMessage = '[LogName] - ERROR';
+    logger = new Logger('LogName', 'ERROR');
+    logger.error('This error is being reported by a logger with a string for a LogLevel');
+    const expectedMessage = '[LogName] - This error is being reported by a logger with a string for a LogLevel';
     expect(fakeWinston.error.called).to.be.true;
     expect(fakeWinston.error.args[0][0]).to.equal(expectedMessage);
-    expect(fakeWinston.warn.called).to.be.false;
   });
 
   it('constructor should create winston logger with default LogLevel if a bad string is passed in as LogLevel', () => {
