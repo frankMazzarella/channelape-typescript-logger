@@ -7,7 +7,7 @@ const LOG_FORMAT = '[%s] - %s';
 export default class Logger {
   private logger = this.createLogger();
 
-  constructor(private loggerName: string, private logLevel: LogLevel) { }
+  constructor(private loggerName: string, private logLevel: LogLevel | string) { }
 
   public error(log: string): void {
     this.logger.error(util.format(LOG_FORMAT, this.loggerName, log));
