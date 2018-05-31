@@ -5,11 +5,12 @@ import LogLevel from '../model/LogLevel';
 const LOG_FORMAT = '[%s] - %s';
 
 export default class Logger {
-  private logger = this.createLogger();
+  private logger: winston.LoggerInstance;
   private logLevel: LogLevel;
 
   constructor(private loggerName: string, logLevel: LogLevel | string) {
     this.logLevel = this.getLogLevel(logLevel);
+    this.logger = this.createLogger();
   }
 
   public error(log: string): void {
@@ -29,9 +30,6 @@ export default class Logger {
   }
 
   private getLogLevel(logLevel: LogLevel | string): LogLevel {
-    if (typeof logLevel !== 'string') {
-      return logLevel;
-    }
     const loweredLogLevel = logLevel.toLowerCase();
     let retLogLevel: LogLevel;
     switch (loweredLogLevel) {
@@ -43,9 +41,6 @@ export default class Logger {
         break;
       case('warn'):
         retLogLevel = LogLevel.WARN;
-        break;
-      case('info'):
-        retLogLevel = LogLevel.INFO;
         break;
       case('verbose'):
         retLogLevel = LogLevel.VERBOSE;

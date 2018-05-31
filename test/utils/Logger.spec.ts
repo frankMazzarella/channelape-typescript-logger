@@ -45,12 +45,44 @@ describe('Logger', () => {
     expect(fakeWinston.error.args[0][0]).to.equal(expectedMessage);
   });
 
+  it('constructor should create winston logger given LogLevel', () => {
+    logger = new Logger('LogName', LogLevel.ERROR);
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.ERROR);
+  });
+
   it('constructor should create winston logger with default LogLevel if a bad string is passed in as LogLevel', () => {
     logger = new Logger('LogName', 'NOT_AN_ACTUAL_LEVEL');
-    logger.info('INFO');
-    const expectedMessage = '[LogName] - INFO';
-    expect(fakeWinston.info.called).to.be.true;
-    expect(fakeWinston.info.args[0][0]).to.equal(expectedMessage);
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.INFO);
+  });
+
+  it('constructor should create winston logger with LogLevel of "OFF" when given the string "OFF"', () => {
+    logger = new Logger('LogName', 'OFF');
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.OFF);
+  });
+
+  it('constructor should create winston logger with LogLevel of "ERROR" when given the string "ERROR"', () => {
+    logger = new Logger('LogName', 'ERROR');
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.ERROR);
+  });
+
+  it('constructor should create winston logger with LogLevel of "WARN" when given the string "WARN"', () => {
+    logger = new Logger('LogName', 'WARN');
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.WARN);
+  });
+
+  it('constructor should create winston logger with LogLevel of "INFO" when given the string "INFO"', () => {
+    logger = new Logger('LogName', 'INFO');
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.INFO);
+  });
+
+  it('constructor should create winston logger with LogLevel of "VERBOSE" when given the string "VERBOSE"', () => {
+    logger = new Logger('LogName', 'VERBOSE');
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.VERBOSE);
+  });
+
+  it('constructor should create winston logger with LogLevel of "DEBUG" when given the string "DEBUG"', () => {
+    logger = new Logger('LogName', 'DEBUG');
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.DEBUG);
   });
 
   it('error() should log when logLevel is ERROR or above', () => {
