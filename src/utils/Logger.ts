@@ -54,16 +54,36 @@ export default class Logger {
 
     function getTimeStamp(date: Date): string {
       const yyyMmDd = `${date.getFullYear()}-${getMonth(date)}-${getDay(date)}`;
-      const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}.${date.getMilliseconds()}`;
+      const time = `${getHours(date)}:${getMinutes(date)}:${getSeconds(date)}.${getMilliseconds(date)}`;
       return `${yyyMmDd} ${time}`;
     }
 
     function getMonth(date: Date): string {
-      return ('0' + date.getMonth()).slice(-2);
+      return pad(date.getMonth() + 1, -2, '0');
     }
 
     function getDay(date: Date): string {
-      return ('0' + date.getDate()).slice(-2);
+      return pad(date.getDate(), -2, '0');
+    }
+
+    function getHours(date: Date): string {
+      return pad(date.getHours(), -2, '0');
+    }
+
+    function getMinutes(date: Date): string {
+      return pad(date.getMinutes(), -2, '0');
+    }
+
+    function getSeconds(date: Date): string {
+      return pad(date.getSeconds(), -2, '0');
+    }
+
+    function getMilliseconds(date: Date): string {
+      return pad(date.getMilliseconds(), -3, '00');
+    }
+
+    function pad(value: number, length: number, leftPad: string): string {
+      return (`${leftPad}${value.toString().slice(length)}`);
     }
   }
 }
