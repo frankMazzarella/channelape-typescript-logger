@@ -83,7 +83,7 @@ export default class Logger {
     }
 
     function pad(value: number, length: number, leftPad: string): string {
-      return (`${leftPad}${value.toString().slice(length)}`);
+      return (`${leftPad}${value.toString()}`.slice(length));
     }
   }
 }
