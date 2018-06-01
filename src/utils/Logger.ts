@@ -30,29 +30,13 @@ export default class Logger {
   }
 
   private getLogLevel(logLevel: LogLevel | string): LogLevel {
-    const loweredLogLevel = logLevel.toLowerCase();
-    let retLogLevel: LogLevel;
-    switch (loweredLogLevel) {
-      case('off'):
-        retLogLevel = LogLevel.OFF;
-        break;
-      case('error'):
-        retLogLevel = LogLevel.ERROR;
-        break;
-      case('warn'):
-        retLogLevel = LogLevel.WARN;
-        break;
-      case('verbose'):
-        retLogLevel = LogLevel.VERBOSE;
-        break;
-      case('debug'):
-        retLogLevel = LogLevel.DEBUG;
-        break;
-      default:
-        retLogLevel = LogLevel.INFO;
-        break;
+    for (const logLevelKey in LogLevel) {
+      const currentLogLevel = LogLevel[logLevelKey];
+      if (logLevel.toLowerCase() === currentLogLevel) {
+        return currentLogLevel as LogLevel;
+      }
     }
-    return retLogLevel;
+    return LogLevel.INFO;
   }
 
   private createLogger() {
