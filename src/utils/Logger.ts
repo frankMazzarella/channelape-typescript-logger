@@ -6,9 +6,9 @@ const LOG_FORMAT = '[%s] - %s';
 
 export default class Logger {
   private logger: winston.LoggerInstance;
-  private logLevel: LogLevel;
+  private readonly logLevel: LogLevel;
 
-  constructor(private loggerName: string, logLevel: LogLevel | string) {
+  constructor(private readonly loggerName: string, logLevel: LogLevel | string) {
     this.logLevel = this.getLogLevel(logLevel);
     this.logger = this.createLogger();
   }
