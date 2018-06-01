@@ -6,9 +6,9 @@ const LOG_FORMAT = '[%s] - %s';
 
 export default class Logger {
   private logger: winston.LoggerInstance;
-  private logLevel: LogLevel;
+  private readonly logLevel: LogLevel;
 
-  constructor(private loggerName: string, logLevel: LogLevel | string) {
+  constructor(private readonly loggerName: string, logLevel: LogLevel | string) {
     this.logLevel = this.getLogLevel(logLevel);
     this.logger = this.createLogger();
   }
@@ -30,29 +30,13 @@ export default class Logger {
   }
 
   private getLogLevel(logLevel: LogLevel | string): LogLevel {
-    const loweredLogLevel = logLevel.toLowerCase();
-    let retLogLevel: LogLevel;
-    switch (loweredLogLevel) {
-      case('off'):
-        retLogLevel = LogLevel.OFF;
-        break;
-      case('error'):
-        retLogLevel = LogLevel.ERROR;
-        break;
-      case('warn'):
-        retLogLevel = LogLevel.WARN;
-        break;
-      case('verbose'):
-        retLogLevel = LogLevel.VERBOSE;
-        break;
-      case('debug'):
-        retLogLevel = LogLevel.DEBUG;
-        break;
-      default:
-        retLogLevel = LogLevel.INFO;
-        break;
+    for (const logLevelKey in LogLevel) {
+      const currentLogLevel = LogLevel[logLevelKey];
+      if (logLevel.toLowerCase() === currentLogLevel) {
+        return currentLogLevel as LogLevel;
+      }
     }
-    return retLogLevel;
+    return LogLevel.INFO;
   }
 
   private createLogger() {
@@ -64,7 +48,42 @@ export default class Logger {
 
   private logFormatter(options: any): string {
     const now = new Date();
+    const timestamp = getTimeStamp(now);
     const level = options.level.toUpperCase();
-    return `[${now.toISOString()}] [${level}] ${options.message}`;
+    return `[${timestamp}] [${level}] ${options.message}`;
+
+    function getTimeStamp(date: Date): string {
+      const yyyMmDd = `${date.getFullYear()}-${getMonth(date)}-${getDay(date)}`;
+      const time = `${getHours(date)}:${getMinutes(date)}:${getSeconds(date)}.${getMilliseconds(date)}`;
+      return `${yyyMmDd} ${time}`;
+    }
+
+    function getMonth(date: Date): string {
+      return pad(date.getMonth() + 1, -2, '0');
+    }
+
+    function getDay(date: Date): string {
+      return pad(date.getDate(), -2, '0');
+    }
+
+    function getHours(date: Date): string {
+      return pad(date.getHours(), -2, '0');
+    }
+
+    function getMinutes(date: Date): string {
+      return pad(date.getMinutes(), -2, '0');
+    }
+
+    function getSeconds(date: Date): string {
+      return pad(date.getSeconds(), -2, '0');
+    }
+
+    function getMilliseconds(date: Date): string {
+      return pad(date.getMilliseconds(), -3, '00');
+    }
+
+    function pad(value: number, length: number, leftPad: string): string {
+      return (`${leftPad}${value.toString()}`.slice(length));
+    }
   }
 }

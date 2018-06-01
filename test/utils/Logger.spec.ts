@@ -13,6 +13,13 @@ describe('Logger', () => {
 
   beforeEach((done) => {
     sandbox = sinon.sandbox.create();
+    sandbox.stub(Date.prototype, 'getFullYear').returns(1984);
+    sandbox.stub(Date.prototype, 'getMonth').returns(4);
+    sandbox.stub(Date.prototype, 'getDate').returns(7);
+    sandbox.stub(Date.prototype, 'getHours').returns(3);
+    sandbox.stub(Date.prototype, 'getMinutes').returns(9);
+    sandbox.stub(Date.prototype, 'getSeconds').returns(5);
+    sandbox.stub(Date.prototype, 'getMilliseconds').returns(8);
     fakeWinston = {
       error: sinon.spy(),
       warn: sinon.spy(),
@@ -28,13 +35,14 @@ describe('Logger', () => {
     done();
   });
 
-  it('constructor should create winston logger with correct formatter set', () => {
+  it('should format the date correctly based on local time', () => {
     const options = {
       message: 'message',
       level: 'error'
     };
     logger = new Logger('LogName', LogLevel.VERBOSE);
-    expect(winstonStub.args[0][0].transports[0].formatter(options)).to.include('[ERROR] message');
+    const expectedErrorMessage = '[1984-05-07 03:09:05.008] [ERROR] message';
+    expect(winstonStub.args[0][0].transports[0].formatter(options)).to.equal(expectedErrorMessage);
   });
 
   it('constructor should create winston logger with correct LogLevel when sent a LogLevel string', () => {
