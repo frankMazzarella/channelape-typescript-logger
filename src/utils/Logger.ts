@@ -48,7 +48,22 @@ export default class Logger {
 
   private logFormatter(options: any): string {
     const now = new Date();
+    const timestamp = getTimeStamp(now);
     const level = options.level.toUpperCase();
-    return `[${now.toISOString()}] [${level}] ${options.message}`;
+    return `[${timestamp}] [${level}] ${options.message}`;
+
+    function getTimeStamp(date: Date): string {
+      const yyyMmDd = `${date.getFullYear()}-${getMonth(date)}-${getDay(date)}`;
+      const time = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}.${date.getMilliseconds()}`;
+      return `${yyyMmDd} ${time}`;
+    }
+
+    function getMonth(date: Date): string {
+      return ('0' + date.getMonth()).slice(-2);
+    }
+
+    function getDay(date: Date): string {
+      return ('0' + date.getDate()).slice(-2);
+    }
   }
 }
