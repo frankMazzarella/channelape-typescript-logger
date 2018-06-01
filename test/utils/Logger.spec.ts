@@ -1,6 +1,6 @@
 import { expect } from 'chai';
 import * as sinon from 'sinon';
-// import * as winston from 'winston';
+import * as winston from 'winston';
 import LogLevel from '../../src/model/LogLevel';
 import Logger from '../../src/utils/Logger';
 
@@ -8,7 +8,7 @@ describe('Logger', () => {
 
   let logger: Logger;
   let sandbox: sinon.SinonSandbox;
-  // let winstonStub: sinon.SinonStub;
+  let winstonStub: sinon.SinonStub;
   let fakeWinston: any;
 
   beforeEach((done) => {
@@ -19,7 +19,7 @@ describe('Logger', () => {
       info: sinon.spy(),
       debug: sinon.spy()
     };
-    // winstonStub = sandbox.stub(winston, 'Logger').returns(fakeWinston);
+    winstonStub = sandbox.stub(winston, 'Logger').returns(fakeWinston);
     done();
   });
 
@@ -29,12 +29,12 @@ describe('Logger', () => {
   });
 
   it('constructor should create winston logger with correct formatter set', () => {
-    // const options = {
-    //   message: 'message',
-    //   level: 'error'
-    // };
+    const options = {
+      message: 'message',
+      level: 'error'
+    };
     logger = new Logger('LogName', LogLevel.VERBOSE);
-    // expect(winstonStub.args[0][0].transports[0].formatter(options)).to.include('[ERROR] message');
+    expect(winstonStub.args[0][0].transports[0].formatter(options)).to.include('[ERROR] message');
   });
 
   it('constructor should create winston logger with correct LogLevel when sent a LogLevel string', () => {
@@ -47,42 +47,42 @@ describe('Logger', () => {
 
   it('constructor should create winston logger given LogLevel', () => {
     logger = new Logger('LogName', LogLevel.ERROR);
-    // expect(winstonStub.args[0][0].level).to.equal(LogLevel.ERROR);
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.ERROR);
   });
 
   it('constructor should create winston logger with default LogLevel if a bad string is passed in as LogLevel', () => {
     logger = new Logger('LogName', 'NOT_AN_ACTUAL_LEVEL');
-    // expect(winstonStub.args[0][0].level).to.equal(LogLevel.INFO);
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.INFO);
   });
 
   it('constructor should create winston logger with LogLevel of "OFF" when given the string "OFF"', () => {
     logger = new Logger('LogName', 'OFF');
-    // expect(winstonStub.args[0][0].level).to.equal(LogLevel.OFF);
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.OFF);
   });
 
   it('constructor should create winston logger with LogLevel of "ERROR" when given the string "ERROR"', () => {
     logger = new Logger('LogName', 'ERROR');
-    // expect(winstonStub.args[0][0].level).to.equal(LogLevel.ERROR);
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.ERROR);
   });
 
   it('constructor should create winston logger with LogLevel of "WARN" when given the string "WARN"', () => {
     logger = new Logger('LogName', 'WARN');
-    // expect(winstonStub.args[0][0].level).to.equal(LogLevel.WARN);
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.WARN);
   });
 
   it('constructor should create winston logger with LogLevel of "INFO" when given the string "INFO"', () => {
     logger = new Logger('LogName', 'INFO');
-    // expect(winstonStub.args[0][0].level).to.equal(LogLevel.INFO);
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.INFO);
   });
 
   it('constructor should create winston logger with LogLevel of "VERBOSE" when given the string "VERBOSE"', () => {
     logger = new Logger('LogName', 'VERBOSE');
-    // expect(winstonStub.args[0][0].level).to.equal(LogLevel.VERBOSE);
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.VERBOSE);
   });
 
   it('constructor should create winston logger with LogLevel of "DEBUG" when given the string "DEBUG"', () => {
     logger = new Logger('LogName', 'DEBUG');
-    // expect(winstonStub.args[0][0].level).to.equal(LogLevel.DEBUG);
+    expect(winstonStub.args[0][0].level).to.equal(LogLevel.DEBUG);
   });
 
   it('error() should log when logLevel is ERROR or above', () => {
