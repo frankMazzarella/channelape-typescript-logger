@@ -5,7 +5,7 @@ import LogLevel from '../model/LogLevel';
 const LOG_FORMAT = '[%s] - %s';
 
 export default class Logger {
-  private logger: winston.LoggerInstance;
+  private readonly logger: winston.LoggerInstance;
   private readonly logLevel: LogLevel;
 
   constructor(private readonly loggerName: string, logLevel: LogLevel | string) {
