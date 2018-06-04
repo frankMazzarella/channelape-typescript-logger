@@ -2,7 +2,7 @@ import * as util from 'util';
 import * as winston from 'winston';
 import LogLevel from '../model/LogLevel';
 
-const LOG_FORMAT = '[%s] - %s';
+const LOG_FORMAT = '%s - %s';
 
 export default class Logger {
   private readonly logger: winston.LoggerInstance;

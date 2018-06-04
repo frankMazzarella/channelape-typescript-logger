@@ -48,7 +48,7 @@ describe('Logger', () => {
   it('constructor should create winston logger with correct LogLevel when sent a LogLevel string', () => {
     logger = new Logger('LogName', 'ERROR');
     logger.error('This error is being reported by a logger with a string for a LogLevel');
-    const expectedMessage = '[LogName] - This error is being reported by a logger with a string for a LogLevel';
+    const expectedMessage = 'LogName - This error is being reported by a logger with a string for a LogLevel';
     expect(fakeWinston.error.called).to.be.true;
     expect(fakeWinston.error.args[0][0]).to.equal(expectedMessage);
   });
@@ -96,7 +96,7 @@ describe('Logger', () => {
   it('error() should log when logLevel is ERROR or above', () => {
     logger = new Logger('LogName', LogLevel.ERROR);
     logger.error('ERROR');
-    const expectedMessage = '[LogName] - ERROR';
+    const expectedMessage = 'LogName - ERROR';
     expect(fakeWinston.error.called).to.be.true;
     expect(fakeWinston.error.args[0][0]).to.equal(expectedMessage);
   });
@@ -104,7 +104,7 @@ describe('Logger', () => {
   it('warn() should log when logLevel is WARN or above', () => {
     logger = new Logger('LogName', LogLevel.WARN);
     logger.warn('WARN');
-    const expectedMessage = '[LogName] - WARN';
+    const expectedMessage = 'LogName - WARN';
     expect(fakeWinston.warn.called).to.be.true;
     expect(fakeWinston.warn.args[0][0]).to.equal(expectedMessage);
   });
@@ -112,7 +112,7 @@ describe('Logger', () => {
   it('info() should log when logLevel is INFO or above', () => {
     logger = new Logger('LogName', LogLevel.INFO);
     logger.info('INFO');
-    const expectedMessage = '[LogName] - INFO';
+    const expectedMessage = 'LogName - INFO';
     expect(fakeWinston.info.called).to.be.true;
     expect(fakeWinston.info.args[0][0]).to.equal(expectedMessage);
   });
@@ -120,7 +120,7 @@ describe('Logger', () => {
   it('debug() should log when logLevel is DEBUG or above', () => {
     logger = new Logger('LogName', LogLevel.DEBUG);
     logger.debug('DEBUG');
-    const expectedMessage = '[LogName] - DEBUG';
+    const expectedMessage = 'LogName - DEBUG';
     expect(fakeWinston.debug.called).to.be.true;
     expect(fakeWinston.debug.args[0][0]).to.equal(expectedMessage);
   });
