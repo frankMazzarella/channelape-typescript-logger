@@ -11,14 +11,5 @@
     "no-debugger": true,
     "no-console": true,
     "no-unused-variable": true
-  },
-  "linterOptions": {
-    "exclude": [
-      "/**/*.json",
-      "/**/*.csv",
-      "/**/*.xml",
-      "/**/*.xls",
-      "/**/*.xlsx"
-    ]
   }
 }
