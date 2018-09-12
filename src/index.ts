@@ -1,2 +1,2 @@
 export { default as LogLevel } from './model/LogLevel';
-export { default as Logger } from './utils/Logger';
+export { default as Logger } from './service/LoggerService';

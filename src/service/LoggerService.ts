@@ -4,7 +4,7 @@ import LogLevel from '../model/LogLevel';
 
 const LOG_FORMAT = '%s - %s';
 
-export default class Logger {
+export default class LoggerService {
   private readonly logger: winston.LoggerInstance;
   private readonly logLevel: LogLevel;
 
